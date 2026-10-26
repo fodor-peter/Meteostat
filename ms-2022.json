@@ -1,0 +1,128 @@
+{
+    "meta": {
+        "source": "Meteostat",
+        "generated": "2026-01-15 20:40:00"
+    },
+    "data": [
+        {
+            "date": "2022-01-01",
+            "tmin": -2,
+            "tmax": 3,
+            "prcp": 0,
+            "wspd": 12,
+            "pres": 1013
+        },
+        {
+            "date": "2022-01-02",
+            "tmin": -1,
+            "tmax": 5,
+            "prcp": 2,
+            "wspd": 15,
+            "pres": 1015
+        },
+        {
+            "date": "2022-01-03",
+            "tmin": 0,
+            "tmax": 6,
+            "prcp": 5,
+            "wspd": 18,
+            "pres": 1012
+        },
+        {
+            "date": "2022-01-04",
+            "tmin": 1,
+            "tmax": 7,
+            "prcp": 0,
+            "wspd": 10,
+            "pres": 1018
+        },
+        {
+            "date": "2022-01-05",
+            "tmin": -3,
+            "tmax": 2,
+            "prcp": 1,
+            "wspd": 20,
+            "pres": 1010
+        },
+        {
+            "date": "2022-01-06",
+            "tmin": -4,
+            "tmax": 1,
+            "prcp": 3,
+            "wspd": 22,
+            "pres": 1008
+        },
+        {
+            "date": "2022-01-07",
+            "tmin": -2,
+            "tmax": 4,
+            "prcp": 0,
+            "wspd": 14,
+            "pres": 1016
+        },
+        {
+            "date": "2022-01-08",
+            "tmin": 0,
+            "tmax": 6,
+            "prcp": 0,
+            "wspd": 11,
+            "pres": 1019
+        },
+        {
+            "date": "2022-01-09",
+            "tmin": 1,
+            "tmax": 8,
+            "prcp": 0,
+            "wspd": 9,
+            "pres": 1020
+        },
+        {
+            "date": "2022-01-10",
+            "tmin": 2,
+            "tmax": 9,
+            "prcp": 0,
+            "wspd": 8,
+            "pres": 1021
+        },
+        {
+            "date": "2022-01-11",
+            "tmin": 3,
+            "tmax": 10,
+            "prcp": 0,
+            "wspd": 7,
+            "pres": 1022
+        },
+        {
+            "date": "2022-01-12",
+            "tmin": 2,
+            "tmax": 8,
+            "prcp": 2,
+            "wspd": 13,
+            "pres": 1017
+        },
+        {
+            "date": "2022-01-13",
+            "tmin": 0,
+            "tmax": 5,
+            "prcp": 4,
+            "wspd": 16,
+            "pres": 1014
+        },
+        {
+            "date": "2022-01-14",
+            "tmin": -1,
+            "tmax": 4,
+            "prcp": 1,
+            "wspd": 12,
+            "pres": 1015
+        },
+        {
+            "date": "2022-01-15",
+            "tmin": -2,
+            "tmax": 3,
+            "prcp": 0,
+            "wspd": 10,
+            "pres": 1018
+        }
+    ]
+}

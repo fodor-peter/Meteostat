@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="hu">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="style.css" />
+    <title>Meteostat</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <h1>Historical Weather - Budapest</h1>
+      <aside>
+        <a href="https://dev.meteostat.net/api/" target="_blank"
+          ><img src="1d.png" alt="weather"
+        /></a>
+        <p>
+          <a href="https://dev.meteostat.net/api/" target="_blank"
+            >Meteostat API</a
+          >
+        </p>
+      </aside>
+      <form action="javascript:void(0);">
+        <label for="start-date">Kezdő dátum:</label>
+        <input type="date" id="start-date" name="start-date" />
+        <label for="end-date">Záró dátum:</label>
+        <input type="date" id="end-date" name="end-date" />
+        <input type="submit" id="submit" value="Küldés" />
+      </form>
+      <div id="data">
+        <table>
+          <thead>
+            <tr>
+              <th>Dátum</th>
+              <th>Minimum</th>
+              <th>Maximum</th>
+              <th>Csapadék</th>
+              <th>Szél</th>
+              <th>Légnyomás</th>
+              <!-- <th>Dátum</th>
+              <th>Min (C°)</th>
+              <th>Max (C°)</th>
+              <th>Csap (mm)</th>
+              <th>Szél (km/h)</th>
+              <th>Légnyomás (hPa)</th> -->
+            </tr>
+          </thead>
+          <tbody id="data-table"></tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
