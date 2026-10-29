@@ -47,7 +47,7 @@ async function loadData() {
   const options = {
     method: 'GET',
     headers: {
-      'X-RapidAPI-Key': '6ff0fdc523mshefd17162e23cb33p1e0749jsn8b6419e96e95',
+      'X-RapidAPI-Key': '*************',
       'X-RapidAPI-Host': 'meteostat.p.rapidapi.com',
     },
   }
