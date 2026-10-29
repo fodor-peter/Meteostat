@@ -1,35 +1,49 @@
-const submit = document.getElementById('submit')
-const data = document.getElementById('data')
+const form = document.querySelector('form')
 const dataTable = document.getElementById('data-table')
-const today = new Date()
-today.setDate(today.getDate() - 1)
+const startInput = document.getElementById('start-date')
+const endInput = document.getElementById('end-date')
+
+const toISO = (d) => d.toISOString().slice(0, 10)
+
+const yesterday = new Date()
+yesterday.setDate(yesterday.getDate() - 1)
 const threeWeeksAgo = new Date()
 threeWeeksAgo.setDate(threeWeeksAgo.getDate() - 21)
-document.getElementById('start-date').valueAsDate = threeWeeksAgo
-document.getElementById('end-date').valueAsDate = today
 
-document.getElementById('start-date').min = '1940-01-01'
-document.getElementById('start-date').max =
-  today.getUTCFullYear() +
-  '-' +
-  ('0' + (today.getUTCMonth() + 1)).slice(-2) +
-  '-' +
-  ('0' + today.getUTCDate()).slice(-2)
-document.getElementById('end-date').min = '1940-01-01'
-document.getElementById('end-date').max =
-  today.getUTCFullYear() +
-  '-' +
-  ('0' + (today.getUTCMonth() + 1)).slice(-2) +
-  '-' +
-  ('0' + today.getUTCDate()).slice(-2)
-window.addEventListener('load', getDate)
-submit.addEventListener('click', getDate)
+startInput.value = toISO(threeWeeksAgo)
+endInput.value = toISO(yesterday)
 
-function getDate() {
-  const startDate = document.getElementById('start-date').value
-  const endDate = document.getElementById('end-date').value
-  const url = `https://meteostat.p.rapidapi.com/point/daily?lat=47.42&lon=19.07&start=${startDate}&end=${endDate}&alt=100`
-  //const url = 'ms-2022.json'
+for (const input of [startInput, endInput]) {
+  input.min = '1940-01-01'
+  input.max = toISO(yesterday)
+}
+
+// Oszlopok: sorrend és formázás egy helyen
+const columns = [
+  { key: 'date', format: (v) => v.split(' ')[0] },
+  { key: 'tmin', format: (v) => Math.round(v) + ' °C' },
+  { key: 'tmax', format: (v) => Math.round(v) + ' °C' },
+  { key: 'prcp', format: (v) => v + ' mm' },
+  { key: 'wspd', format: (v) => Math.round(v) + ' km/h' },
+  { key: 'pres', format: (v) => Math.round(v) + ' hPa' },
+]
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault()
+  loadData()
+})
+window.addEventListener('load', loadData)
+
+async function loadData() {
+  const start = startInput.value
+  const end = endInput.value
+
+  if (start > end) {
+    showMessage('A kezdő dátum nem lehet később, mint a záró dátum.')
+    return
+  }
+
+  const url = `https://meteostat.p.rapidapi.com/point/daily?lat=47.42&lon=19.07&start=${start}&end=${end}&alt=100`
   const options = {
     method: 'GET',
     headers: {
@@ -37,56 +51,37 @@ function getDate() {
       'X-RapidAPI-Host': 'meteostat.p.rapidapi.com',
     },
   }
-  getData(url, options)
-}
 
-async function getData(url, options) {
   try {
     const response = await fetch(url, options)
+    if (!response.ok) throw new Error(`HTTP ${response.status}`)
     const result = await response.json()
-    deleteFromTable()
-    writeToTable(result.data)
+    writeToTable(result.data ?? [])
   } catch (error) {
     console.error(error)
+    showMessage('Nem sikerült lekérni az adatokat.')
   }
 }
 
-function writeToTable(arr) {
-  arr.forEach(function (obj) {
-    let tr = document.createElement('tr')
-    dataTable.appendChild(tr)
-    Object.keys(obj).forEach(function (key) {
-      let td = document.createElement('td')
-      switch (key) {
-        case 'date':
-          tr.appendChild(td)
-          td.innerHTML = obj[key].split(' ')[0]
-          break
-        case 'tmax':
-          tr.appendChild(td)
-          td.innerHTML = Math.round(obj[key]) + ' C°'
-          break
-        case 'tmin':
-          tr.appendChild(td)
-          td.innerHTML = Math.round(obj[key]) + ' C°'
-          break
-        case 'prcp':
-          tr.appendChild(td)
-          td.innerHTML = obj[key] + ' mm'
-          break
-        case 'wspd':
-          tr.appendChild(td)
-          td.innerHTML = Math.round(obj[key]) + ' km/h'
-          break
-        case 'pres':
-          tr.appendChild(td)
-          td.innerHTML = Math.round(obj[key]) + ' hPa'
-          break
-      }
+function writeToTable(rows) {
+  dataTable.replaceChildren()
+  rows.forEach((row) => {
+    const tr = document.createElement('tr')
+    columns.forEach(({ key, format }) => {
+      const td = document.createElement('td')
+      td.textContent = row[key] == null ? '–' : format(row[key])
+      tr.appendChild(td)
     })
+    dataTable.appendChild(tr)
   })
 }
 
-function deleteFromTable() {
-  dataTable.innerHTML = ''
+function showMessage(text) {
+  dataTable.replaceChildren()
+  const tr = document.createElement('tr')
+  const td = document.createElement('td')
+  td.colSpan = columns.length
+  td.textContent = text
+  tr.appendChild(td)
+  dataTable.appendChild(tr)
 }
